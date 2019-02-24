@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="styles.css">
+
+<div class="container">
+
+    <form id="signup" action="/upload" method=post enctype=multipart/form-data>
+
+        <div class="header">
+
+            <h3>Don't Phish Me</h3>
+
+            <p>Submit a picture to verify links in URLs and QR Codes</p>
+
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="inputs">
+          <!-- <input type="button" id="loadFileXml" value="Take a Picture" onclick="document.getElementById('file').click();" />
+
+
+            <input type="password" placeholder="Password" />
+
+            <div class="checkboxy">
+                <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I accept the terms of use</label>
+            </div> -->
+
+          <a id="upload" onclick="document.getElementById('file').click();">Take a Picture</a>
+          <input type="file" accept="image/*;capture=camera" style="display:none;" id="file" name="file"/>
+
+
+          <a id="submit" onclick="document.getElementById('signup').submit(); return false;">Submit Picture</a>
+
+        </div>
+
+    </form>
+
+</div>
