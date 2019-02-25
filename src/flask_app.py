@@ -47,7 +47,8 @@ def upload_file():
 
 
             return result_string
-    return '''
+    return
+    '''
     <!doctype html>
     <title>Upload new File</title>
     <h1>Upload new File</h1>
@@ -56,4 +57,3 @@ def upload_file():
       <input type=submit value=Upload>
     </form>
     '''
-
