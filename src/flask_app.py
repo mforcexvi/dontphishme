@@ -1,13 +1,10 @@
-
-# A very simple Flask Hello World app for you to get started with...
-
 from flask import Flask
 import os
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from pyzbar.pyzbar import decode
 from PIL import Image
 import math
+import modules.ocr_api as ocr
 
 UPLOAD_FOLDER = '/home/nophish/nophishsite/uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
@@ -42,11 +39,18 @@ def upload_file():
             resized = uploaded_image.resize(dimensions,Image.ANTIALIAS)
             resized.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            results_list = decode(Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
-            result_string = results_list[0][0].decode("utf-8")
+            qr_url = ocr.decode_qr(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            ocr_url = ocr.run_ocr('http://nophish.pythonanywhere.com/' + filename)
 
+            # results_list = decode(Image.open(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
+            # result_string = results_list[0][0].decode("utf-8")
 
-            return result_string
+            output_string = qr_url
+            for url in ocr_url:
+                output_string += " "
+                output_string += url
+
+            return output_string
     return
     '''
     <!doctype html>

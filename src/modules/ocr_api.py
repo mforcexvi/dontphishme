@@ -3,6 +3,7 @@ import json
 import re
 from dotenv import load_dotenv
 import os
+from pyzbar.pyzbar import decode
 load_dotenv()
 
 
@@ -28,3 +29,8 @@ def run_ocr(image_uri):
 
     urls = re.findall('(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+', results)
     return(urls)
+
+def decode_qr(filepath):
+    results_list = decode(Image.open(filepath))
+    result_string = results_list[0][0].decode("utf-8")
+    return result_string
