@@ -10,7 +10,10 @@ DATA = 1
 def get_url_params(url) :
     r = requests.get(url, allow_redirects=False)
     r.raise_for_status()
-    return (r.status_code, r.headers['Location'])
+    link = url
+    if  r.status_code/100 ==3 :
+        link = r.headers['Location']
+    return (r.status_code, link)
 
 def unshorten_url(url) :
     statusCode, link  = get_url_params(url)
