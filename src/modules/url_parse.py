@@ -17,6 +17,8 @@ def get_url_params(url) :
 
 def unshorten_url(url) :
     statusCode, link  = get_url_params(url)
+    if statusCode //100 ==4 :
+        return "Error 4xx"
     while statusCode//100 == 3 :
         statusCode, link = get_url_params(url)
         url = link
