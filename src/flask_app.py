@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from PIL import Image
 import math
 import modules.ocr_api as ocr
+import modules.test_url as test_url
 import base64
 
 UPLOAD_FOLDER = '/home/nophish/static'
@@ -16,6 +17,22 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/base64_test/<base>')
+def base64_test(base):
+    return base64.b64decode(base).decode('utf-8')
+
+@app.route('/test_string/<url>')
+def test_string(url):
+    decoded = base64.b64decode(url).decode('utf-8')
+    return str(test_url.test_url(decoded))
+
+@app.route('/unshorten_url/<url1>')
+def unshorten(url1):
+    decoded = base64.b64decode(url1).decode('utf-8')
+    return str(test_url.expand_url(decoded))
+
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
